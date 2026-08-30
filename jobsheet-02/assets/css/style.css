@@ -13,7 +13,8 @@ body {
 }
 
 a {
-    color: #1d5b8a;
+    /* perubahan no 1 - ganti #1d5b8a jadi hijau tua */
+    color: #1d6b4a;
     text-decoration: none;
 }
 
@@ -23,33 +24,18 @@ a:hover {
 
 /* ===== Header & Navbar (Flexbox) ===== */
 header {
-    background-color: #1d5b8a;
+    /* perubahan no 1 - ganti #1d5b8a jadi hijau tua */
+    background-color: #1d6b4a;
     color: #fff;
     padding: 1rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* soal no 4 - ini yang bikin navbar wrap ke bawah pas layar sempit */
 }
 
 header h1 {
     font-size: 1.4rem;
-}
-
-header nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1.25rem;
-}
-
-header nav a {
-    color: #fff;
-    font-weight: 500;
-}
-
-header {
-    display: flex;
-    padding: 1rem 1.5rem;
 }
 
 header nav ul {
@@ -79,14 +65,16 @@ section {
 }
 
 section h2 {
+    /* perubahan no 1 - ganti #1d5b8a jadi hijau tua */
+    color: #1d6b4a;
     margin-bottom: 1rem;
-    color: #1d5b8a;
 }
 
 /* ===== Kartu Statistik (CSS Grid) ===== */
 main section:nth-of-type(2) {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    /* perubahan no 2 - dari repeat(3, 1fr) jadi repeat(4, 1fr) untuk kolom ke-4 */
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
 }
 
@@ -106,7 +94,8 @@ main section:nth-of-type(2) article h3 {
 main section:nth-of-type(2) article p {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #1d5b8a;
+    /* perubahan no 1 - ganti #1d5b8a jadi hijau tua */
+    color: #1d6b4a;
 }
 
 /* ===== Tabel ===== */
@@ -122,7 +111,8 @@ th, td {
 }
 
 thead {
-    background-color: #1d5b8a;
+    /* perubahan no 1 - ganti #1d5b8a jadi hijau tua */
+    background-color: #1d6b4a;
     color: #fff;
 }
 
@@ -143,12 +133,20 @@ td button {
     font-size: 0.85rem;
 }
 
-td button:first-of-type {
+/* perubahan no 3 - ganti dari :first-of-type/:last-of-type (berbasis posisi)
+   ke class (berbasis makna), supaya warna tombol tetap benar
+   walau ditambah tombol Detail di tengah */
+td button.btn-edit {
     background-color: #f0ad4e;
     color: #fff;
 }
 
-td button:last-of-type {
+td button.btn-detail {
+    background-color: #5bc0de;
+    color: #fff;
+}
+
+td button.btn-hapus {
     background-color: #d9534f;
     color: #fff;
 }
@@ -176,7 +174,8 @@ form select {
 }
 
 form button[type="submit"] {
-    background-color: #1d5b8a;
+    /* perubahan no 1 - ganti #1d5b8a jadi hijau tua */
+    background-color: #1d6b4a;
     color: #fff;
     border: none;
     padding: 0.6rem 1.5rem;
@@ -186,9 +185,9 @@ form button[type="submit"] {
 }
 
 form button[type="submit"]:hover {
-    background-color: #164869;
+    /* perubahan no 1 - warna hover disesuaikan (lebih gelap dari #1d6b4a) */
+    background-color: #124d33;
 }
-
 
 /* ===== Footer ===== */
 footer {
@@ -197,4 +196,3 @@ footer {
     color: #7a8794;
     font-size: 0.9rem;
 }
-
