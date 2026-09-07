@@ -49,6 +49,23 @@ header nav a {
     font-weight: 500;
 }
 
+header nav a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+header nav a.active {
+    padding-bottom: 4px;
+    font-weight: 700;
+}
+
+header nav a.active {
+    color: #f0ad4e;
+    font-weight: 700;
+}
+
 /* ===== Main Layout ===== */
 main {
     max-width: 1000px;
@@ -136,13 +153,13 @@ td button {
    ke class (berbasis makna), supaya warna tombol tetap benar
    walau ditambah tombol Detail di tengah */
 td button.btn-edit {
-    background-color: #f0ad4e;
+    background-color: #337ab7;
     color: #fff;
     
 }
 
 td button.btn-detail {
-    background-color: #5bc0de;
+    background-color: gold;
     color: #fff;
 }
 
