@@ -207,38 +207,23 @@ form button[type="submit"]:hover {
     background-color: #3644b0;
 }
 
-/* ===== Hamburger Menu (checkbox hack) ===== */
-.nav-toggle-label {
-    display: none;
-    font-size: 1.6rem;
-    color: #fff;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
+/* ===== Animasi Menu Hamburger (Latihan 2) ===== */
+@media (max-width: 991.98px) {
+    header .navbar-collapse.collapse {
+        display: block;
+        overflow: hidden;
+        max-height: 400px;
+        opacity: 1;
+        visibility: visible;
+        transition: max-height 0.35s ease, opacity 0.25s ease, visibility 0s;
+    }
 
-header {
-    position: relative;
-}
-
-.nav-toggle-label {
-    display: block;
-}
-
-header nav {
-    display: none;
-    width: 100%;
-    order: 3;
-    margin-top: 1rem;
-}
-
-.nav-toggle:checked ~ nav {
-    display: block;
-}
-
-header nav ul {
-    flex-direction: column;
-    gap: 0.75rem;
+    header .navbar-collapse.collapse:not(.show) {
+        max-height: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: max-height 0.35s ease, opacity 0.25s ease, visibility 0s 0.35s;
+    }
 }
 
 /* ===== Tabel Responsif ===== */
@@ -257,30 +242,6 @@ header nav ul {
 
 /* Mobile */
 @media (max-width: 480px) {
-    header {
-        position: relative;
-    }
-
-    .nav-toggle-label {
-        display: block;
-    }
-
-    header nav {
-        display: none;
-        width: 100%;
-        order: 3;
-        margin-top: 1rem;
-    }
-
-    .nav-toggle:checked ~ nav {
-        display: block;
-    }
-
-    header nav ul {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
     main section:nth-of-type(2) {
         grid-template-columns: 1fr;
     }
