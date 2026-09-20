@@ -1,8 +1,6 @@
-# Desain-Pemrograman-Web
+# Jobsheet 5 — JavaScript DOM & Event
 
-# Jobsheet 03
-
-Jobsheet ini berisi penerapan **Responsive Web Design (RWD)** pada sistem pengelolaan data buku dan anggota perpustakaan (SIMPUS-Mini), meliputi penggunaan meta viewport, media query, breakpoint, dan pendekatan desktop-first.
+Sub-CPMK: Menerapkan manipulasi DOM dan event JavaScript.
 
 ## Identitas
 
@@ -13,92 +11,119 @@ Jobsheet ini berisi penerapan **Responsive Web Design (RWD)** pada sistem pengel
 | Mata Kuliah | Desain Pemograman Web |
 | Kelas | TI - 2D |
 
-# Dokumentasi Jobsheet 3 (Versi Bootstrap)
+## Tujuan
 
-Dokumentasi ini adalah **versi alternatif** dari
-[dokumentasi jobsheet-03](../../jobsheet-03/Dokumentasi/README.md) yang
-memakai CSS murni (hand-written CSS). Fungsionalitas dan halamannya
-**identik** — Beranda, Daftar Buku, Tambah Buku, Daftar Anggota, Tambah
-Anggota — tapi seluruh tata letak dan komponen visualnya dibangun ulang
-memakai **framework CSS Bootstrap 5**, bukan CSS custom dari nol.
+Menghidupkan halaman-halaman SIMPUS-Mini dengan JavaScript di sisi client: menu hamburger, validasi form, pencarian tabel, dan konfirmasi hapus. Semua berjalan di browser tanpa server atau database.
 
-Kalau kamu belum paham konsep responsive design dasar (viewport, media
-query, breakpoint), baca dulu
-[bab 1 dokumentasi jobsheet-03 asli](../../jobsheet-03/Dokumentasi/01-konsep-dasar-responsive.md)
-karena dokumentasi ini akan sering membandingkan "cara CSS murni" vs
-"cara Bootstrap" untuk menyelesaikan masalah yang sama.
+## Perubahan dari Jobsheet 4
 
-## Kenapa Ada Dua Versi?
+- Ditambahkan `assets/js/app.js` dan dihubungkan ke semua halaman lewat `<script src="...app.js">`.
+- Hamburger menu digerakkan oleh JavaScript (event `click` dan `classList.toggle`).
+- Form Tambah Buku dan Tambah Anggota diberi validasi client-side dengan pesan error inline.
+- Halaman Daftar Buku dan Daftar Anggota diberi kolom pencarian real-time, counter jumlah baris, dan konfirmasi hapus.
+- Aturan CSS hamburger lama (checkbox hack) dihapus dari `style.css`, diganti animasi geser untuk menu.
 
-Tujuannya supaya kamu bisa membandingkan langsung **dua pendekatan** untuk
-mencapai hasil visual yang mirip:
+## Fitur yang Dibuat
 
-| | Jobsheet 3 (CSS Murni) | Jobsheet 3 (Bootstrap) |
+### 1. Hamburger menu
+Tombol `#nav-toggle-btn` memiliki event `click` yang menambah atau menghapus class `show` pada menu `#navMenu`. Karena halaman memakai navbar Bootstrap, class `show` adalah class yang dikenali Bootstrap untuk menampilkan menu. Atribut `data-bs-toggle` dan `data-bs-target` pada tombol dihapus supaya Bootstrap tidak ikut men-toggle dan bertabrakan dengan JavaScript.
+
+### 2. Validasi form Tambah Buku dan Tambah Anggota
+- Form diberi `id="form-tambah"` dan atribut `novalidate` agar validasi bawaan browser tidak mendahului pesan error dari JavaScript.
+- Pesan error dibuat lewat DOM (`createElement("span")` dan `insertAdjacentElement`) di bawah field yang salah, dan dihapus saat field sudah benar.
+- Kursor otomatis pindah ke field pertama yang salah, dan form tidak terkirim (`preventDefault`) selama masih ada error. Semua berjalan tanpa reload halaman.
+
+| Form | Field | Aturan |
 |---|---|---|
-| Layout | `display: flex`, `display: grid` ditulis manual | `.row` / `.col-*` (grid 12 kolom Bootstrap) |
-| Navbar & hamburger | Checkbox hack (`:checked` + sibling combinator `~`) | Komponen `.navbar` bawaan + sedikit JavaScript Bootstrap |
-| Kartu | `<section>` + CSS custom (`border-radius`, `box-shadow` manual) | Komponen `.card` bawaan |
-| Tabel | `<table>` + CSS custom (`nth-child`, `:hover`) | Class utility `.table`, `.table-striped`, `.table-hover` |
-| Form | `<input>`/`<select>` + CSS custom | Class utility `.form-control`, `.form-select`, `.form-label` |
-| Breakpoint | Ditulis sendiri (`768px`, `480px`) | Bawaan Bootstrap (`sm`, `md`, `lg`, `xl`, `xxl`) |
-| Total baris CSS custom | ~245 baris (`style.css`) | ~15 baris (`style.css`) |
+| Buku | Judul, Pengarang | Wajib diisi |
+| Buku | Tahun terbit | Bilangan bulat, 1900 sampai tahun berjalan |
+| Buku | ISBN | Wajib, hanya angka dan tanda hubung (-) |
+| Buku | Stok | Bilangan bulat, tidak boleh negatif |
+| Anggota | Nama, No. Anggota, Alamat | Wajib diisi |
+| Anggota | No. HP | Wajib, 8-15 karakter (angka, +, -) |
+| Anggota | Email | Wajib, format email valid |
 
-Intinya: **hasil akhirnya bisa mirip, tapi cara mencapainya sangat
-berbeda.** CSS murni memberi kontrol penuh tapi butuh menulis semua
-aturan sendiri; Bootstrap memberi banyak komponen & utility class siap
-pakai, dengan konsekuensi harus memuat file CSS/JS tambahan dan mengikuti
-konvensi nama class-nya.
+### 3. Pencarian tabel real-time
+Kolom cari (`#search-input`) menyaring baris tabel setiap kali ada ketikan (event `keyup`) dengan mengatur `style.display`. Pencarian hanya membaca kolom **Judul** (buku) atau **Nama** (anggota), bukan seluruh teks baris.
 
-## Daftar Isi
+### 4. Konfirmasi hapus
+Tombol Hapus (`.btn-hapus`) menampilkan dialog `confirm()` yang menyebut judul atau nama data. Jika dikonfirmasi, baris dihapus dari tampilan. Penghapusan ini belum ke server, jadi data muncul kembali setelah halaman dimuat ulang.
 
-1. [Konsep Dasar Bootstrap](01-konsep-dasar-bootstrap.md)
-2. [Apa yang Berubah di File HTML?](02-perubahan-file-html.md)
-3. [Navbar Responsif ala Bootstrap](03-navbar-responsive-bootstrap.md)
-4. [Grid System & Komponen Card](04-grid-dan-card.md)
-5. [Tabel & Form dengan Utility Class Bootstrap](05-tabel-dan-form-bootstrap.md)
-6. [Rangkuman & Perbandingan dengan CSS Murni](06-rangkuman-dan-perbandingan.md)
+### 5. Tugas mandiri: halaman Anggota
+Validasi (form Tambah Anggota) dan pencarian (Daftar Anggota) yang sama diterapkan pada halaman Anggota. Satu file `app.js` dipakai bersama oleh semua halaman.
+
+## Ide Latihan Tambahan (8.4)
+
+| # | Latihan | Hasil |
+|---|---|---|
+| 1 | Validasi field ISBN | ISBN hanya menerima angka dan tanda hubung |
+| 2 | Animasi menu hamburger | Menu bergeser halus (transisi `max-height` dan `opacity` di `style.css`) |
+| 3 | Pencarian satu kolom | Pencarian hanya pada kolom Judul/Nama lewat `row.cells[idx]` |
+| 4 | Counter baris | Teks "Menampilkan X dari Y buku/anggota" di atas tabel, diperbarui saat mencari dan menghapus |
+| 5 | Refactor validasi | Aturan field disimpan dalam array `ATURAN` dan divalidasi dengan `forEach`, tanpa blok `if` per field |
+
+## File yang Diubah
+
+| File | Perubahan |
+|---|---|
+| `assets/js/app.js` | Baru: hamburger, validasi, pencarian, counter, konfirmasi hapus |
+| `assets/css/style.css` | Hapus aturan hamburger checkbox hack, tambah animasi menu, `.error`, `.search-box` |
+| Semua HTML | Tombol hamburger ber-`id="nav-toggle-btn"`, script `app.js` terpasang, footer jadi Jobsheet 5 |
+| `buku/list.html`, `anggota/list.html` | Kolom cari `#search-input`, tombol Hapus ber-class `btn-hapus` |
+| `buku/tambah.html`, `anggota/tambah.html` | `<form id="form-tambah" novalidate>` |
 
 ## Struktur Folder
 
 ```
-jobsheet-03-bootstrap/
-├── index.html              # Beranda
-├── assets/
-│   └── css/
-│       └── style.css       # Override kecil di atas Bootstrap (~15 baris)
-├── buku/
-│   ├── list.html
-│   └── tambah.html
+jobsheet-05/
 ├── anggota/
 │   ├── list.html
 │   └── tambah.html
-└── Dokumentasi/             # Folder dokumentasi ini
+├── assets/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── app.js
+├── buku/
+│   ├── list.html
+│   └── tambah.html
+├── docs/
+│   └── wireframe.md
+├── dokumentasi/            # Screenshot hasil
+├── index.html
+└── README.md
 ```
 
-## Konsep yang Dipelajari
+## Cara Menjalankan dan Menguji
 
-### 1. Responsive Web Design (RWD) dengan Framework
-Pendekatan membangun halaman web agar tata letaknya menyesuaikan diri secara otomatis dengan lebar layar perangkat (HP, tablet, laptop, monitor besar) menggunakan satu file HTML yang sama. Pada jobsheet ini, penyesuaian tersebut tidak ditulis manual lewat CSS, melainkan memanfaatkan framework **Bootstrap 5** yang sudah menyediakan sistem grid dan komponen siap pakai.
+Buka `index.html` di browser, lalu coba:
 
-### 2. Pendekatan Mobile-First Bootstrap
-Berbeda dengan pendekatan desktop-first (menulis gaya besar dulu, lalu ditimpa media query untuk layar kecil), Bootstrap menganut strategi **mobile-first**: gaya default suatu elemen berlaku untuk layar kecil, lalu ditambahkan class breakpoint (`md-`, `lg-`, `xl-`) untuk mengubah tampilan saat layar melebar. Contohnya class `col-12 col-md-3` — secara default elemen mengambil 12 kolom (penuh) di layar kecil, lalu berubah menjadi 3 kolom saat lebar layar mencapai breakpoint `md` (≥768px) ke atas.
+1. Buka **Tambah Buku** atau **Tambah Anggota**, kirim form kosong: pesan error muncul di bawah tiap field tanpa reload.
+2. Isi ISBN dengan huruf (misalnya "ABC-123"): muncul pesan bahwa ISBN hanya boleh angka dan tanda hubung.
+3. Buka **List Buku** atau **List Anggota**, ketik di kolom cari: tabel tersaring dan counter berubah.
+4. Klik **Hapus**: muncul dialog konfirmasi, baris hilang jika dikonfirmasi, dan counter berkurang.
+5. Kecilkan jendela browser di bawah 992px, lalu klik tombol ☰: menu terbuka dan tertutup dengan efek geser.
+6. Buka Console browser (**F12**) dan pastikan tidak ada error.
 
-### 3. Grid System Bootstrap
-Bootstrap membagi lebar halaman menjadi 12 kolom virtual melalui kombinasi class `container`, `row`, dan `col-*`. Jumlah kolom yang diambil suatu elemen (misalnya `col-md-3` berarti 3 dari 12 kolom, atau seperempat lebar layar) menentukan berapa banyak elemen sejenis yang muat sejajar dalam satu baris pada breakpoint tersebut.
+<!--
+## Dokumentasi (Screenshot)
 
-### 4. Breakpoint
-Bootstrap menyediakan beberapa titik lebar layar standar (breakpoint) yang otomatis mengubah perilaku class grid dan utility, yaitu `sm` (≥576px), `md` (≥768px), `lg` (≥992px), `xl` (≥1200px), dan `xxl` (≥1400px). Class yang tidak diberi akhiran breakpoint (misal `col-12`) berlaku untuk semua ukuran layar sebagai nilai dasar.
+Aktifkan bagian ini setelah screenshot terbaru diambil (hapus tanda komentar di atas
+dan di bawah), lalu pastikan nama file sesuai isi folder dokumentasi/.
 
-### 5. Utility Classes
-Bootstrap menyediakan class-class kecil siap pakai untuk mengatur spacing, warna, tipografi, dan tata letak tanpa perlu menulis CSS kustom, misalnya `mb-3` (margin bawah), `p-3` (padding), `text-center` (rata tengah), `fw-bold` (tebal), dan `shadow-sm` (bayangan tipis). Pendekatan ini mengurangi kebutuhan menulis selector CSS manual untuk styling yang bersifat umum.
+### Pesan error validasi
+![Validasi Tambah Buku](dokumentasi/validasi-tambahbuku.png)
 
-### 6. Navbar Responsif (Collapse Component)
-Komponen `navbar` dari Bootstrap secara otomatis berubah dari tampilan horizontal (di layar besar) menjadi menu hamburger yang dapat dibuka-tutup (di layar kecil) melalui atribut `data-bs-toggle="collapse"` dan `data-bs-target`, tanpa perlu menulis JavaScript sendiri — cukup memuat file `bootstrap.bundle.min.js`.
+### Pencarian dan counter
+![Pencarian Daftar Buku](dokumentasi/cari-listbuku.png)
 
-### 7. Komponen Siap Pakai (Card, Form Control)
-Bootstrap menyediakan komponen visual siap pakai seperti `card` untuk mengelompokkan konten dalam kotak dengan bayangan dan padding konsisten, serta class form seperti `form-control`, `form-label`, `form-select`, dan `btn btn-primary` yang membuat elemen form (input, label, select, tombol) memiliki tampilan seragam tanpa perlu styling manual satu per satu.
+### Konfirmasi hapus
+![Konfirmasi Hapus](dokumentasi/konfirmasi-hapus.png)
 
+### Menu hamburger (tampilan mobile)
+![Hamburger](dokumentasi/hamburger.png)
+-->
 
-## Cara Menjalankan
+## Kesimpulan
 
-Buka file `index.html` melalui browser, lalu coba ubah ukuran jendela browser (atau buka lewat DevTools mode responsive) untuk melihat perubahan tampilan di breakpoint tablet dan mobile.
+Dengan JavaScript, halaman yang sebelumnya statis menjadi interaktif: pengguna mendapat umpan balik langsung saat mengisi form, dapat mencari data tanpa memuat ulang halaman, dan diminta konfirmasi sebelum menghapus. Pola yang dipakai, yaitu memilih elemen lewat id atau class, memasang event listener, lalu mengubah DOM, akan dipakai kembali pada jobsheet berikutnya ketika data diambil dari server.
