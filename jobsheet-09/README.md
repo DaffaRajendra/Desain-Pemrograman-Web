@@ -23,24 +23,6 @@ Melengkapi CRUD SIMINVENT-Mini dari Jobsheet 8 dengan **pagination** (`LIMIT` / 
 | `assets/js/app.js` | Filter tabel sisi klien dihapus karena pencarian sekarang dikerjakan server |
 | `assets/css/style.css` | Warna komponen pagination mengikuti tema indigo |
 
-## Cara Kerja
-
-1. Form pencarian memakai `method="get"` sehingga kata kunci dan nomor halaman ada di URL (`list.php?q=kursi&page=2`).
-2. Server menghitung total data yang cocok dengan `SELECT COUNT(*)`.
-3. `$totalPages = max(1, ceil($totalRows / $perPage))`, lalu `$page` dibatasi agar tidak melebihi halaman terakhir.
-4. `$offset = ($page - 1) * $perPage`.
-5. Data diambil dengan `LIMIT :limit OFFSET :offset`. Nilainya di-bind memakai `PDO::PARAM_INT`.
-
-```php
-$stmt = $pdo->prepare(
-    'SELECT * FROM barang WHERE nama_barang ILIKE :kw ORDER BY id DESC LIMIT :limit OFFSET :offset'
-);
-$stmt->bindValue('kw', '%' . $keyword . '%');
-$stmt->bindValue('limit', $perPage, PDO::PARAM_INT);
-$stmt->bindValue('offset', $offset, PDO::PARAM_INT);
-$stmt->execute();
-```
-
 ## Struktur Folder
 
 ```
